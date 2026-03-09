@@ -41,13 +41,22 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public TransactionResponseModel update(Long Id, TransactionRequestModel request) {
-        return null;
+    public TransactionResponseModel update(Long id, TransactionRequestModel request) {
+        TransactionEntity transaction = findById(id);
+        transaction.setDescription(request.getDescription());
+        transaction.setAmount(request.getAmount());
+        transaction.setType(request.getType());
+        transaction.setDate(request.getDate());
+        transaction.setNotes(request.getNotes());
+        CategoryExists(request, request.getCategoryId());
+        return transactionMapper.toResponse(transactionRepo.save(transaction));
     }
 
     @Override
     public void delete(Long id) {
-
+        TransactionEntity transaction = findById(id);
+        transaction.setStatus(Status.DELETED);
+        transactionRepo.save(transaction);
     }
 
     //----------------------Helpers---------------
