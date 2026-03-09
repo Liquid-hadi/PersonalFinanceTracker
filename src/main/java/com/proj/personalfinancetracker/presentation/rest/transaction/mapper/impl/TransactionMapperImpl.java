@@ -1,6 +1,8 @@
 package com.proj.personalfinancetracker.presentation.rest.transaction.mapper.impl;
 
 import com.proj.personalfinancetracker.external.db.financedb.myfinance.entity.TransactionEntity;
+import com.proj.personalfinancetracker.model.enums.Status;
+import com.proj.personalfinancetracker.model.transaction.TransactionRequestModel;
 import com.proj.personalfinancetracker.model.transaction.TransactionResponseModel;
 import com.proj.personalfinancetracker.presentation.rest.transaction.mapper.TransactionMapper;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +27,14 @@ public class TransactionMapperImpl implements TransactionMapper {
     }
 
     @Override
-    public TransactionEntity toEntity(TransactionResponseModel responseModel) {
-        return null;
+    public TransactionEntity toEntity(TransactionRequestModel request) {
+        TransactionEntity t = new TransactionEntity();
+        t.setDescription(request.getDescription());
+        t.setAmount(request.getAmount());
+        t.setType(request.getType());
+        t.setDate(request.getDate());
+        t.setNotes(request.getNotes());
+        t.setStatus(Status.ACTIVE);
+        return t;
     }
 }

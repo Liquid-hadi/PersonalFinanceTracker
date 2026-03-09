@@ -7,7 +7,7 @@ import com.proj.personalfinancetracker.model.transaction.TransactionResponseMode
 public interface TransactionService {
     TransactionListModel getAll();
     TransactionResponseModel getById(Long id);
-    TransactionResponseModel create();
+    TransactionResponseModel create(TransactionRequestModel request);
     TransactionResponseModel update(Long Id, TransactionRequestModel request);
     void delete(Long id);
 }
