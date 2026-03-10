@@ -18,7 +18,7 @@ import javax.management.Descriptor;
 @RequiredArgsConstructor
 @Tag(name = "Summary", description = "")
 public class SummaryController {
-    private SummaryService service;
+    private final SummaryService service;
 
     @GetMapping
     @Operation(summary = "Get monthly summary", description = "Returns total income, expenses and net balance for a given month")
