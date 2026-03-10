@@ -22,7 +22,7 @@ public class TransactionMapperImpl implements TransactionMapper {
         res.setDate(entity.getDate());
         res.setNotes(entity.getNotes());
         res.setStatus(entity.getStatus());
-        res.setCategoryName(entity.getCategory().getName());
+        res.setCategoryName(entity.getCategory() != null ? entity.getCategory().getName() : null);
         return res;
     }
 
