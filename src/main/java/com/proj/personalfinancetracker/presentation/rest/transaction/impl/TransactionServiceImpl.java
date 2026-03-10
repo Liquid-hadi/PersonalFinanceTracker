@@ -1,5 +1,6 @@
 package com.proj.personalfinancetracker.presentation.rest.transaction.impl;
 
+import com.proj.personalfinancetracker.external.db.financedb.myfinance.entity.CategoryEntity;
 import com.proj.personalfinancetracker.external.db.financedb.myfinance.entity.TransactionEntity;
 import com.proj.personalfinancetracker.external.db.financedb.myfinance.repository.CategoryRepo;
 import com.proj.personalfinancetracker.external.db.financedb.myfinance.repository.TransactionRepo;
@@ -23,8 +24,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public TransactionListModel getAll() {
         return new TransactionListModel(
-                transactionRepo.findAllByStatus(Status.ACTIVE)
-                        .stream().map(transactionMapper::toResponse).toList()
+                transactionRepo.findAllByStatus(Status.ACTIVE).stream().map(transactionMapper::toResponse).toList()
         );
     }
 
@@ -36,7 +36,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public TransactionResponseModel create(TransactionRequestModel request) {
         TransactionEntity transaction = transactionMapper.toEntity(request);
-        CategoryExists(request, request.getCategoryId());
+        transaction.setCategory(categoryExists(request.getCategoryId()));
         return transactionMapper.toResponse(transactionRepo.save(transaction));
     }
 
@@ -48,7 +48,7 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setType(request.getType());
         transaction.setDate(request.getDate());
         transaction.setNotes(request.getNotes());
-        CategoryExists(request, request.getCategoryId());
+        transaction.setCategory(categoryExists(request.getCategoryId()));
         return transactionMapper.toResponse(transactionRepo.save(transaction));
     }
 
@@ -67,11 +67,8 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     //----------------------Validation---------------
-    private void CategoryExists(TransactionRequestModel request, Long categoryId){
-        if(categoryId != null){
-            categoryRepo.findByIdAndStatus(categoryId, Status.ACTIVE)
-                    .orElseThrow(() -> new RuntimeException("Category not found: "+categoryId));
-        }
-
+    private CategoryEntity categoryExists(Long categoryId) {
+        if (categoryId != null) return null;
+        return categoryRepo.findByIdAndStatus(categoryId, Status.ACTIVE).orElseThrow(() -> new RuntimeException("Category not found: " + categoryId));
     }
 }
