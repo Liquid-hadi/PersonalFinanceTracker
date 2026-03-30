@@ -1,6 +1,6 @@
-# 💰 Personal Finance Tracker
+# 💰 Ledger
 
-A full-stack personal finance application to track income, expenses, and monthly financial summaries — built with **Spring Boot 4.1** on the backend and **Angular 19** on the frontend.
+Ledger is a full-stack personal finance application to track income, expenses, and monthly financial summaries — built with **Spring Boot 4.1** on the backend and **Angular 19** on the frontend.
 
 ---
 
